@@ -1,5 +1,5 @@
-import 'package:crud_sqflite/db_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:crud_sqflite/db_helper.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -125,6 +125,28 @@ class _HomeScreenState extends State<HomeScreen> {
         ));
   }
 
+  Widget _buildSkeletonLoader() {
+    return ListView.builder(
+      itemCount: 5, // Number of skeleton items to show
+      itemBuilder: (context, index) => Card(
+        margin: const EdgeInsets.all(15),
+        child: ListTile(
+          title: Container(
+            height: 20,
+            width: double.infinity,
+            color: Colors.grey[300],
+          ),
+          subtitle: Container(
+            height: 14,
+            width: double.infinity,
+            color: Colors.grey[300],
+            margin: const EdgeInsets.only(top: 10),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -133,9 +155,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text("CRUD Operation"),
       ),
       body: _isLoading
-          ? const Center(
-        child: CircularProgressIndicator(),
-      )
+          ? _buildSkeletonLoader()
           : ListView.builder(
         itemCount: _allData.length,
         itemBuilder: (context, index) => Card(
