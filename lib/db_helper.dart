@@ -1,6 +1,7 @@
 import 'package:sqflite/sqflite.dart' as sql;
 
 class SQLHelper {
+
   /// Table Create Function
   static Future<void> createTables(sql.Database database) async {
     await database.execute("""CREATE TABLE data(
@@ -18,6 +19,7 @@ class SQLHelper {
         });
   }
 
+  // Data Create
   static Future<int> createData(String title, String? desc) async {
     final db = await SQLHelper.db();
 
@@ -29,16 +31,13 @@ class SQLHelper {
     return id;
   }
 
+  //Get All Data
   static Future<List<Map<String, dynamic>>> getAllData() async {
     final db = await SQLHelper.db();
     return db.query('data', orderBy: 'id');
   }
 
-  static Future<List<Map<String, dynamic>>> getSingleData(int id) async {
-    final db = await SQLHelper.db();
-    return db.query('data', where: "id = ?", whereArgs: [id], limit: 1);
-  }
-
+  //Data Update
   static Future<int> updateData(int id, String title, String? desc) async {
     final db = await SQLHelper.db();
     final data = {
@@ -52,6 +51,7 @@ class SQLHelper {
     return result;
   }
 
+  //Data delete
   static Future<void> deleteData(int id) async {
     final db = await SQLHelper.db();
 
